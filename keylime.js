@@ -102,17 +102,35 @@ var
          * Deletes the previous character or current selection
          */
         Backspace:  function () {
-                        if (!isInput(document.activeElement))
+                        var a   = document.activeElement,
+                            sel = window.getSelection();
+
+                        if (!isInput(a))
                             return;
 
-                        var sel = window.getSelection();
+                        // selectionStart works better in older WebKit...
+                        if (supportAnySel || regSupportSel.test(a.type)) {
+                            var ss = a.selectionStart;
 
-                        // If no characters are selected, select the previous
-                        if (!String(sel).length)
-                            sel.modify('extend', 'backward', 'character');
+                            if (!String(sel).length) {
+                                a.value = a.value.slice(0, ss - 1) + a.value.slice(ss);
+                                a.selectionStart = ss - 1;
+                            }
+                            else {
+                                a.value = a.value.slice(0, ss) + a.value.slice(a.selectionEnd);
+                                a.selectionStart = ss;
+                            }
+                        }
 
-                        // Remove the selected range(s)
-                        sel.deleteFromDocument();
+                        // ...but fails for some elements in newer WebKit/Blink
+                        else {
+                            // If no characters are selected, select the previous
+                            if (!String(sel).length)
+                                sel.modify('extend', 'backward', 'character');
+
+                            // Remove the selected range(s)
+                            sel.deleteFromDocument();
+                        }
                     },
 
         /**
