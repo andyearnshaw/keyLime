@@ -574,20 +574,20 @@ function isInput (el) {
 /**
  * Automatically shows the IME on focus if settings permit
  */
-document.addEventListener('DOMFocusIn', function (evt) {
+document.addEventListener('focus', function (evt) {
     var tag = evt.target.tagName;
 
     if (!exports.config.noauto && (evt.target.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA'))
         showIME();
-});
+}, true);
 
 /**
  * Automatically shows the IME on focus if settings permit
  */
-document.addEventListener('DOMFocusOut', function (evt) {
+document.addEventListener('blur', function (evt) {
     if (visible && !exports.config.noauto)
         hideIME();
-});
+}, true);
 
 /**
  * Captures and handles keydown events before they hit any elements
