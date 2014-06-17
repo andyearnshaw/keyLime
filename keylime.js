@@ -596,18 +596,20 @@ document.addEventListener('keydown', function (evt) {
     if (!visible)
         return;
 
-    var dia;
-    switch (evt.key) {
-        case 'ArrowLeft':
-        case 'ArrowRight':
-        case 'ArrowUp':
-        case 'ArrowDown':
+    var dia,
+        key = evt.key.replace(/^Arrow/, '');
+
+    switch (key) {
+        case 'Left':
+        case 'Right':
+        case 'Up':
+        case 'Down':
             // When the "move caret" button is toggled, arrow keys behave as normal
             if (move)
                 return;
 
             swallowEvt(evt);
-            moveKeyFocus(evt.key.slice(5).toLowerCase());
+            moveKeyFocus(key.toLowerCase());
             break;
 
         case 'Enter':
@@ -636,6 +638,10 @@ document.addEventListener('keydown', function (evt) {
  * Fan service: flash the buttons as they are pressed on a hardware keyboard
  */
 document.addEventListener('keypress', function (evt) {
+    // Fix for Firefox to get the demo working
+    if (evt.charCode === 0)
+        return;
+
     var s = String.fromCharCode(evt.keyCode).toLowerCase(),
         e = imeCtr.querySelector('li[data-text="'+s+'"]');
 
@@ -655,13 +661,13 @@ document.addEventListener('keyup', function (evt) {
         return;
 
     var dia;
-    switch (evt.key) {
+    switch (evt.key.replace(/^Arrow/, '')) {
         case 'Escape':
         case 'BrowserBack':
-        case 'ArrowUp':
-        case 'ArrowDown':
-        case 'ArrowLeft':
-        case 'ArrowRight':
+        case 'Up':
+        case 'Down':
+        case 'Left':
+        case 'Right':
             swallowEvt(evt);
             break;
 
@@ -755,7 +761,7 @@ imeCtr.addEventListener('mouseout', function (evt) {
     if (global.KeyboardEvent && !global.KeyboardEvent.prototype.hasOwnProperty('key'))
         Object.defineProperty(global.KeyboardEvent.prototype, 'key', prop);
 
-    if (global.KeyEvent && !global.KeyEvent.prototype.hasOwnProperty('key'))
+    if (global.KeyEvent && global.KeyEvent.prototype && !global.KeyEvent.prototype.hasOwnProperty('key'))
         Object.defineProperty(global.KeyEvent.prototype, 'key', prop);
 
 })(global);
