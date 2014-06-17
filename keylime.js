@@ -776,6 +776,22 @@ imeCtr.addEventListener('mouseout', function (evt) {
             return map[code] || 'Unidentified';
         }};
 
+    // Map for Samsung TV remote
+    if (global.TvKeyCode) {
+        map[TvKeyCode.RETURN] = 'BrowserBack';
+        map[TvKeyCode.ENTER]  = 'Enter';
+        map[TvKeyCode.UP]     = 'ArrowUp';
+        map[TvKeyCode.DOWN]   = 'ArrowDown';
+        map[TvKeyCode.LEFT]   = 'ArrowLeft';
+        map[TvKeyCode.RIGHT]  = 'ArrowRight';
+    }
+
+    // LG TV remote (and possibly others)
+    else if (global.KeyEvent && global.KeyEvent.VK_ENTER) {
+        map[global.KeyEvent.VK_BACK]  = 'BrowserBack';
+        map[global.KeyEvent.VK_ENTER] = 'Enter';
+    }
+
     if (global.KeyboardEvent && !global.KeyboardEvent.prototype.hasOwnProperty('key'))
         Object.defineProperty(global.KeyboardEvent.prototype, 'key', prop);
 
