@@ -1,4 +1,8 @@
-# Key Lime - JavaScript-Based Input Method Editor 
+# Key Lime - JavaScript IME 
+
+<p align="center">
+  <img src="screenshot.png?raw=true" alt="" />
+</p>
 
 Key Lime is an input method editor written using pure JavaScript.  The library
 is designed for Smart TV applications where the manufacturers' virtual
@@ -7,6 +11,17 @@ have an instance individually attached to every input element you want to use
 it for, and LG Smart TV's native virtual keyboard is great but there's no way
 to detect when the user closes it.  So, in the spirit of writing less code, Key
 Lime allows you to just add the script and "fuggedaboudit".
+
+## Features
+
+If you're using a WebKit or Blink-based browser, check out the [demo](demo.html?raw=true).
+
+ - Full keyboard navigation via arrow keys, never steals focus from the input
+ - Complete transparency, all key events are intercepted before they reach the input element
+ - Supports holding for diacritics, similar to touch screen keyboards
+ - Fully stylable with CSS, base style inspired by the Windows 8 virtual keyboard
+ - Tab button for moving between form fields
+ - Convenient keys for quickly entering "http://", "www." and ".com"
 
 ## Getting started
 
