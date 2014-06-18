@@ -12,9 +12,7 @@ it for, and LG Smart TV's native virtual keyboard is great but there's no way
 to detect when the user closes it.  So, in the spirit of writing less code, Key
 Lime allows you to just add the script and "fuggedaboudit".
 
-## Features
-
-If you're using a WebKit or Blink-based browser, check out the [demo][1].
+## Features ([demo][demo])
 
  - Full keyboard navigation via arrow keys, never steals focus from the input
  - Complete transparency, all key events are intercepted before they reach the input element
@@ -23,7 +21,7 @@ If you're using a WebKit or Blink-based browser, check out the [demo][1].
  - Tab button for moving between form fields
  - Convenient keys for quickly entering "http://", "www." and ".com"
 
-[1]: http://rawgithub.com/andyearnshaw/keyLime/master/demo.html
+[demo]: http://rawgithub.com/andyearnshaw/keyLime/master/demo.html
 
 ## Getting started
 
