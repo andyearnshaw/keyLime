@@ -42,6 +42,34 @@ You can change this to work manually by setting
 
 Then just call `keyLime.show()` or `keyLime.hide()` whenever you need it.
 
+## Font
+
+The keyboard is set up to use the OS's default sans-serif font, but I'd highly
+recommend using something like [Fira Sans][fira].  Some smart TV platforms
+might be missing some of the glyphs used. LG 2013 smart TVs don't have U+232B
+Erase To The Left (⌫), for example, and most of the glyphs ignore font size on
+the Samsung 2013 smart TV platform.
+
+Note that different fonts might require some tweaking of the Key Lime CSS to
+get the look right.
+
+[fira]: https://www.mozilla.org/en-US/styleguide/products/firefox-os/typeface/
+
+## API
+
+Key Lime will fire `keylimeshow` and `keylimehide` events on the active element.
+
+Alongside the `keyLime.show()` and `keyLime.hide()` methods are a couple of
+configuration options:
+
+    // Don't show/hide the keyboard automatically on focus/blur
+    keyLime.config.noauto = false;
+
+    // The length of time to hold a key before diacritics are shown 
+    keyLime.config.keyHoldTimeout = 500;
+
+The values in that example are the defaults for those settings.
+
 ## Roadmap
 
  - Make it easy to add other languages
