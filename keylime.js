@@ -248,6 +248,11 @@ function hideIME () {
 
         document.body.removeChild(imeCtr);
         visible = false;
+
+        if (focused) {
+            focused.classList.remove('lime-focus');
+            focused = null;
+        }
     });
 }
 
