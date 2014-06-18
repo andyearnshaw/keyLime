@@ -678,7 +678,7 @@ document.addEventListener('keypress', function (evt) {
  * Text entry happens on keyup
  */
 document.addEventListener('keyup', function (evt) {
-    if (!visible)
+    if (!visible || !focused)
         return;
 
     var dia;
