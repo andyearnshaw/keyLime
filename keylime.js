@@ -632,7 +632,7 @@ document.addEventListener('keydown', function (evt) {
 
         case 'Enter':
             if (!holdTimer)
-                holdTimer = setTimeout(showDiacritics, 500);
+                holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
 
             swallowEvt(evt);
             break;
@@ -718,7 +718,7 @@ imeCtr.addEventListener('mousedown', function (evt) {
     if (!evt.target.classList.contains('lime-key'))
         return;
 
-    holdTimer = setTimeout(showDiacritics, 500);
+    holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
 }, true);
 
 /**
