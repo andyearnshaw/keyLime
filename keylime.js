@@ -20,11 +20,16 @@
 "use strict";
 
 var
-    holdTimer, focused, shift, caps, sym, move, lastLeft, ruleIdx, diacriticsMenu,
+    holdTimer, hideTimer, focused, shift, caps, sym, move, lastLeft, ruleIdx, diacriticsMenu,
     style    = document.createElement('style'),
     imeCtr   = document.createElement('div'),
     exports  = global.keyLime || { config: {} },
     visible  = false,
+
+    // Check that events can be constructed as per DOM4
+    evtConstructors = (function () {
+        try { return !!new CustomEvent('a'); } catch (e) { return false; }
+    })(),
 
     // Didn't seem worth having a separate file for the default styles, so here they are
     cssRules = [
@@ -224,16 +229,26 @@ function showIME () {
     if (!isInput(document.activeElement))
         return;
 
-    document.body.appendChild(imeCtr);
-    visible = true;
+    clearTimeout(hideTimer);
+
+    if (!visible && dispatchCustomEvent('keylimeshow')) {
+        document.body.appendChild(imeCtr);
+        visible = true;
+    }
 }
 
 /**
  * Removes the keyboard from the document
  */
 function hideIME () {
-    document.body.removeChild(imeCtr);
-    visible = false;
+    clearTimeout(hideTimer);
+    hideTimer = setTimeout(function () {
+        if (!visible || !dispatchCustomEvent('keylimehide'))
+            return;
+
+        document.body.removeChild(imeCtr);
+        visible = false;
+    });
 }
 
 /**
@@ -576,6 +591,25 @@ function tabNext () {
         next = n.shift();
         next.focus();
     }
+}
+
+/**
+ * Triggers a custom event on the active element
+ */
+function dispatchCustomEvent(type) {
+    var evt;
+
+    // DOM4 constructor
+    if (evtConstructors)
+        evt = new CustomEvent(type, { bubbles: true, cancelable: true });
+
+    // Older method
+    else {
+        evt = document.createEvent('CustomEvent');
+        evt.initCustomEvent(type, true, true);
+    }
+
+    return document.activeElement.dispatchEvent(evt);
 }
 
 /**
