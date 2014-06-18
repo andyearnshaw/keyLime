@@ -20,7 +20,7 @@
 "use strict";
 
 var
-    holdTimer, hideTimer, focused, shift, caps, sym, move, lastLeft, lastDir, ruleIdx, diacriticsMenu,
+    holdTimer, hideTimer, focused, shift, caps, sym, move, lastLeft, lastDir, diacriticsMenu,
     style    = document.createElement('style'),
     imeCtr   = document.createElement('div'),
     exports  = global.keyLime || { config: {} },
@@ -271,7 +271,6 @@ function initKeys () {
                 after:  '<li id="limeCaret" class="lime-key lime-special-key lime-caret">|↔</li>'
             },
         },
-        dia    = inputMode.verbatim.diacritics,
         keys   = inputMode.verbatim.keys;
 
     // Create a <menu> for the row and <li>s for each key
@@ -622,12 +621,8 @@ function dispatchCustomEvent(type) {
  * Checks an element can receive text input and returns a boolean accordingly
  */
 function isInput (el) {
-    var
-        // Regex to match inputs needing the IME
-        allowed = /^(?:text|email|number|password|tel|url|search)$/,
-
-        // These don't allow selection, which may break the IME
-        toText  = /^(?:email|number)$/;
+    var // Regex to match inputs needing the IME
+        allowed = /^(?:text|email|number|password|tel|url|search)$/;
 
     return (allowed.test(el.type) || el.isContentEditable) && !el.readOnly;
 }
@@ -645,7 +640,7 @@ document.addEventListener('focus', function (evt) {
 /**
  * Automatically shows the IME on focus if settings permit
  */
-document.addEventListener('blur', function (evt) {
+document.addEventListener('blur', function () {
     if (visible && !exports.config.noauto)
         hideIME();
 }, true);
@@ -657,8 +652,7 @@ document.addEventListener('keydown', function (evt) {
     if (!visible)
         return;
 
-    var dia,
-        key = evt.key.replace(/^Arrow/, '');
+    var key = evt.key.replace(/^Arrow/, '');
 
     switch (key) {
         case 'Left':
@@ -721,7 +715,6 @@ document.addEventListener('keyup', function (evt) {
     if (!visible || !focused)
         return;
 
-    var dia;
     switch (evt.key.replace(/^Arrow/, '')) {
         case 'Escape':
         case 'BrowserBack':
@@ -755,9 +748,6 @@ document.addEventListener('keyup', function (evt) {
 imeCtr.addEventListener('mousedown', function (evt) {
     swallowEvt(evt);
 
-    var tgt = evt.target,
-        act = document.activeElement;
-
     if (!evt.target.classList.contains('lime-key'))
         return;
 
@@ -769,9 +759,6 @@ imeCtr.addEventListener('mousedown', function (evt) {
  */
 imeCtr.addEventListener('mouseup', function (evt) {
     swallowEvt(evt);
-
-    var tgt = evt.target,
-        act = document.activeElement;
 
     if (!evt.target.classList.contains('lime-key'))
         return;
