@@ -243,12 +243,12 @@ function initKeys () {
     var html   = '',
         spKeys = {
             row2: {
-                before: '<li id="limeTab" class="lime-key lime-special-key lime-tab">⇥</li>',
+                before: '<li id="limeTab" class="lime-key lime-special-key lime-tab">Tab</li>',
                 after:  '<li id="limeBackspace" class="lime-key lime-special-key lime-backspace">⌫</li>'
             },
             row3: {
-                before: '<li id="limeShift" class="lime-key lime-special-key lime-shift">⇑</li>',
-                after:  '<li id="limeCaret" class="lime-key lime-special-key lime-caret">|⇄</li>'
+                before: '<li id="limeShift" class="lime-key lime-special-key lime-shift">↑</li>',
+                after:  '<li id="limeCaret" class="lime-key lime-special-key lime-caret">|↔</li>'
             },
         },
         dia    = inputMode.verbatim.diacritics,
@@ -276,7 +276,7 @@ function initKeys () {
           +   '<li class="lime-key lime-wwwdot" data-text="www."></li>'
           +   '<li class="lime-key lime-spacebar" data-text=" ">&nbsp;</li>'
           +   '<li class="lime-key lime-dotcom" data-text=".com"></li>'
-          +   '<li id="limeReturn" class="lime-key lime-special-key lime-return">➥</li>'
+          +   '<li id="limeReturn" class="lime-key lime-special-key lime-return">→</li>'
           + '</menu>';
 
     imeCtr.innerHTML = html;
