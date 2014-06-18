@@ -20,7 +20,7 @@
 "use strict";
 
 var
-    holdTimer, hideTimer, focused, shift, caps, sym, move, lastLeft, ruleIdx, diacriticsMenu,
+    holdTimer, hideTimer, focused, shift, caps, sym, move, lastLeft, lastDir, ruleIdx, diacriticsMenu,
     style    = document.createElement('style'),
     imeCtr   = document.createElement('div'),
     exports  = global.keyLime || { config: {} },
@@ -345,24 +345,25 @@ function moveKeyFocus(dir) {
         if (!lastLeft)
             x = lastLeft = rect.left + (focused.offsetWidth / 2);
 
-        // First check is slightly to the left from the center of the last key
-        next = document.elementFromPoint(x - 10, y);
+        // As the key layout may be staggered, we should assume the user wants
+        // to reach the farthest key in the direction they were going.
+        // We check the location slightly to the left or right of the middle of
+        // the focused key first...
+        next = document.elementFromPoint(lastDir === 'left' ? x - 10 : x + 10, y);
 
-        // If not found, check slightly to the right instead
+        // ...if there was no key at that point, try the other side
         if (!next.classList.contains('lime-key'))
             next = document.elementFromPoint(x + 10, y);
-
-        // Still nothing? Undo!
-        if (!next.classList.contains('lime-key'))
-            next = null;
     }
 
-    if (next) {
+    if (next.classList.contains('lime-key')) {
         newFocus(next);
 
-        // Set lastLeft only when moving horizontally
-        if (dir === 'left' || dir === 'right')
+        // Set lastLeft and lastDir only when moving horizontally
+        if (dir === 'left' || dir === 'right') {
             lastLeft = focused.getBoundingClientRect().left + (focused.offsetWidth / 2);
+            lastDir  = dir;
+        }
     }
 
     // Allow the user to move out of the diacritics menu
