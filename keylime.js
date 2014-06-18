@@ -35,7 +35,7 @@ var
     cssRules = [
         '.lime-container { background-color: #333; position: absolute; bottom: 0; left: 0; right: 0; color: #fff; z-index:1000000; font-family: sans-serif; }',
         '.lime-container-dim::before { position: absolute; content: ""; top: 0; left: 0; right: 0; bottom: 0; background-color: #000; opacity: 0.5; }',
-        '.lime-key-row { list-style-type: none; clear: both; text-align: center; padding: 0; margin: 0; font-size: 28px; font-weight: bold; }',
+        '.lime-key-row { list-style-type: none; clear: both; text-align: center; padding: 0; margin: 0; font-size: 28px; }',
         '.lime-diacritics-row { position: absolute; z-index: 2; overflow: hidden; -webkit-transition: width 400ms; transition: width 400ms; white-space: nowrap; }',
         '.lime-key { vertical-align: top; display: inline-block; border: 3px solid #333; background-color: #666; width: 66px; line-height: 50px; -webkit-transition: all 400ms linear; transition: all 400ms linear; }',
 
