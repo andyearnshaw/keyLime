@@ -551,28 +551,31 @@ function hideDiacritics () {
  * Selects next element in tabbing order
  */
 function tabNext () {
-    var next,
+    var next, i,
+        a = document.activeElement,
 
     // Get element list as a real array so we can sort it
-        n = Array.prototype.slice.call(document.getElementsByTagName('*'));
+        n = Array.prototype.slice.call((a.form||document).getElementsByTagName('*'));
 
     // Filter out untabables
-    n = n.filter(function (a) { return a.tabIndex > -1; });
+    n = n.filter(function (a) { return a.tabIndex > -1 && a.offsetHeight && !a.disabled; });
 
+    // Sort by tab order
     n.sort(function (a, b) {
         // Use Number.MAX_VALUE instead of 0 to sort to end
         return (a.tabIndex||Number.MAX_VALUE) - (b.tabIndex||Number.MAX_VALUE);
     });
 
-    // Find the element following the currently focused element
-    next = n[n.indexOf(document.activeElement) + 1];
+    // Reorder and remove active so next element is first
+    i = n.indexOf(a);
+    n = n.slice(i + 1).concat(n.slice(0, i));
+    i = 0;
 
-    // Wrap from last to first
-    if (!next)
-        next = n[0];
-
-    if (next)
+    while (document.activeElement != next && n.length) {
+        // Find the element following the currently focused element
+        next = n.shift();
         next.focus();
+    }
 }
 
 /**
