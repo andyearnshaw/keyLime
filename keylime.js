@@ -483,8 +483,21 @@ function swallowEvt (evt) {
  * Submits the current form if there is one and hides the IME
  */
 function submit () {
-    if (document.activeElement.form)
-        document.activeElement.form.submit();
+    var e,
+        f = document.activeElement.form;
+
+    if (f) {
+        // submit() doesn't trigger the onsubmit event, so we have to do it ourselves
+        if (evtConstructors)
+            e = new Event('submit', { bubbles: true, cancelable: true });
+        else {
+            e = document.createEvent('HTMLEvents');
+            e.initEvent('submit', true, true);
+        }
+
+        if (f.dispatchEvent(e))
+            f.submit();
+    }
 
     hideIME();
 }
