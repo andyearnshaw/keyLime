@@ -253,6 +253,12 @@ function hideIME () {
             focused.classList.remove('lime-focus');
             focused = null;
         }
+
+        // Reset position
+        if (imeCtr.style.bottom) {
+            imeCtr.style.top    = '';
+            imeCtr.style.bottom = '';
+        }
     });
 }
 
@@ -648,6 +654,22 @@ document.addEventListener('focus', function (evt) {
 
     if (!exports.config.noauto && (evt.target.isContentEditable || tag === 'INPUT' || tag === 'TEXTAREA'))
         showIME();
+
+    // Ensure the keyboard doesn't hide the focused element
+    if (visible) {
+        imeCtr.style.top    = '';
+        imeCtr.style.bottom = '';
+
+        var elr  = evt.target.getBoundingClientRect(),
+            ctr  = imeCtr.offsetTop,
+            diff = elr.bottom - ctr;
+
+        // Position the keyboard at the top if necessary
+        if (diff > 0) {
+            imeCtr.style.top    = '0';
+            imeCtr.style.bottom = 'auto';
+        }
+    }
 }, true);
 
 /**
