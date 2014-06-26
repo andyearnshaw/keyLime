@@ -1,4 +1,4 @@
-/*jshint laxbreak:true, boss:true, shadow:true*/
+/*jshint laxbreak:true, boss:true, shadow:true, unused:true*/
 /**
  * @license Copyright 2014 Andy Earnshaw, MIT License
  *
