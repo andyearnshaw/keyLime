@@ -730,8 +730,8 @@ document.addEventListener('keydown', function (evt) {
  * Fan service: flash the buttons as they are pressed on a hardware keyboard
  */
 document.addEventListener('keypress', function (evt) {
-    // Fix for Firefox to get the demo working
-    if (evt.charCode === 0)
+    // Don't flash on password elements, exit if no char code
+    if (evt.target.type === 'password' || evt.charCode === 0)
         return;
 
     var s = String.fromCharCode(evt.keyCode).toLowerCase(),
