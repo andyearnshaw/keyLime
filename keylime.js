@@ -703,10 +703,12 @@ document.addEventListener('keydown', function (evt) {
             break;
 
         case 'Enter':
-            if (!holdTimer)
-                holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
+            if (focused) {
+                if (!holdTimer)
+                    holdTimer = setTimeout(showDiacritics, exports.config.keyHoldTimeout || 500);
 
-            swallowEvt(evt);
+                swallowEvt(evt);
+            }
             break;
 
         case 'Escape':
@@ -737,6 +739,7 @@ document.addEventListener('keypress', function (evt) {
 
     if (e) {
         newFocus(e);
+        focused = undefined;
         window.setTimeout(function () {
             e.classList.remove('lime-focus');
         }, 100);
