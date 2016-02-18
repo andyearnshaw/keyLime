@@ -125,6 +125,7 @@ var
                                 a.value = a.value.slice(0, ss) + a.value.slice(a.selectionEnd);
                                 a.selectionStart = ss;
                             }
+                            doPostInput(a);
                         }
 
                         // ...but fails for some elements in newer WebKit/Blink
@@ -474,6 +475,7 @@ function doKeyAction () {
             while (len-- > 0)
                 s.modify('move', 'backward', 'character');
         }
+        doPostInput(a);
     }
 }
 
@@ -644,6 +646,15 @@ function isInput (el) {
         allowed = /^(?:text|email|number|password|tel|url|search)$/;
 
     return (allowed.test(el.type) || el.isContentEditable) && !el.readOnly;
+}
+
+/**
+ * Runs a custom post-input routine if one has been configured.
+ */
+function doPostInput(control) {
+    var postInput = exports.config.postInput; 
+    if (!postInput) return; 
+    postInput(control);
 }
 
 /**
