@@ -742,14 +742,11 @@ document.addEventListener('keydown', function (evt) {
  */
 document.addEventListener('keypress', function (evt) {
     // Don't flash on password elements, exit if no char code
-    if (evt.target.type === 'password' || evt.charCode === 0)
+    if (evt.target.type === 'password' || evt.charCode === 0 || evt.keyCode === 13)
         return;
 
-    var s = String.fromCharCode(evt.keyCode).toLowerCase();
-
-    if (evt.keyCode == 13) return;
-
-    var e = imeCtr.querySelector('li[data-text="'+s+'"]');
+    var s = String.fromCharCode(evt.keyCode).toLowerCase(),
+        e = imeCtr.querySelector('li[data-text="'+s+'"]');
 
     if (e) {
         newFocus(e);
