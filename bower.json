@@ -1,6 +1,6 @@
 {
 	"name": "keylime",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "Key Lime is an input method editor written using pure JavaScript.",
 	"main": ["keylime.js", "keylime.min.js"],
     "keywords": [
